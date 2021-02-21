@@ -13,12 +13,15 @@ const basemap_gsi = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessph
 
 L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
 
-const svg = 'vending.svg'
-const iconURL = 'data:css/image/svg+xml;base64,' + btoa(svg);
+//const svg1 = 'vending.svg'
+//const iconURL = 'data:app/css/svg/svg1+xml;base64,' + btoa(svg1);
+//const iconURL = 'app/css/svg/vending.svg';
 
-const venderIcon = L.icon({iconUrl:iconURL})
+//const venderIcon = L.icon({iconUrl:iconURL})
 
-const shelter_Marker = L.AwesomeMarkers.icon({icon:'home', markerColor:'darkgreen'});
+const shelter_Marker = L.AwesomeMarkers.icon({icon:'heart', markerColor:'red'});
+const power_Marker = L.AwesomeMarkers.icon({icon:'plug', markerColor:'orange'});
+const water_Marker = L.AwesomeMarkers.icon({icon:'tint', markerColor:'blue'});
 //const power_Marker = L.icon({icon:iconUrl});
 //const water_Marker = L.icon({icon:iconUrl});
 
@@ -51,21 +54,21 @@ function onEachFeature_water(feature, layer){
 const shelter_layer = new L.geoJson(json_shelter, {
                             onEachFeature: onEachFeature_shelter,
                             pointToLayer: function(feature, latlng){
-                            return L.marker(latlng, {icon: venderIcon});
+                            return L.marker(latlng, {icon: shelter_Marker});
                             }
                         });
 
 const power_layer = new L.geoJson(json_power, {
                             onEachFeature: onEachFeature_power,
                             pointToLayer: function(feature, latlng){
-                            return L.marker(latlng, {icon: venderIcon});
+                            return L.marker(latlng, {icon: power_Marker});
                             }
                         });
 
 const water_layer = new L.geoJson(json_water, {
                             onEachFeature: onEachFeature_water,
                             pointToLayer: function(feature, latlng){
-                            return L.marker(latlng, {icon: venderIcon});
+                            return L.marker(latlng, {icon: water_Marker});
                             }
                         });
 
