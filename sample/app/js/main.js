@@ -25,7 +25,9 @@ const water_Marker = L.AwesomeMarkers.icon({icon:'tint', markerColor:'blue'});
 //const power_Marker = L.icon({icon:iconUrl});
 //const water_Marker = L.icon({icon:iconUrl});
 
-const boundary_style = {"fillColor": "transparent", "Color": "blue"};
+const boundary_style = {"fillColor":"red", "color":"transparent"};
+const hazard_layer = new L.geoJson(json_hazard, {style:boundary_style});
+
 
 function onEachFeature_shelter(feature, layer){
     if (feature.properties && feature.properties.name){
@@ -51,6 +53,9 @@ function onEachFeature_water(feature, layer){
     }
 }
 
+const position_Marker = L.icon.pulse({iconSize:[20,20],fillColor:'rgba(144,238,144,0.8)',color:'green',heartbeat:1.5, animate:true});
+const position_layer = L.marker([35.7815,139.6922], {icon: position_Marker});
+
 const shelter_layer = new L.geoJson(json_shelter, {
                             onEachFeature: onEachFeature_shelter,
                             pointToLayer: function(feature, latlng){
@@ -73,14 +78,17 @@ const water_layer = new L.geoJson(json_water, {
                         });
 
 basemap_gsi.addTo(map);
+hazard_layer.addTo(map);
 shelter_layer.addTo(map);
 power_layer.addTo(map);
 water_layer.addTo(map);
+position_layer.addTo(map);
 
 const overlayMaps = {
     '避難所': shelter_layer,
     '電力': power_layer,
-    '給水': water_layer
+    '給水': water_layer,
+    '危険区域': hazard_layer
 };
 
 const baseMaps = {  
