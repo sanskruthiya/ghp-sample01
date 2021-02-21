@@ -8,7 +8,7 @@ const map = L.map('map', {
 const bounds = [[90,-180], [-90,180]];
 map.setMaxBounds(bounds);
 
-const basemap_osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors,<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',maxZoom: 28});
+const basemap_osm = L.tileLayer('https://{s}.tile.openstreetmap.jp/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors,<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',maxZoom: 28});
 const basemap_gsi = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', {attribution: '&copy; <a href="https://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a>',maxZoom: 18});
 
 L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
@@ -77,17 +77,39 @@ const water_layer = new L.geoJson(json_water, {
                             }
                         });
 
+const shelter_cluster = new L.MarkerClusterGroup({
+                                showCoverageOnHover: false,
+                                maxClusterRadius: 50,
+                                spiderfyDistanceMultiplier: 2
+                            });
+
+const power_cluster = new L.MarkerClusterGroup({
+                                showCoverageOnHover: false,
+                                maxClusterRadius: 50,
+                                spiderfyDistanceMultiplier: 2
+                            });
+
+const water_cluster = new L.MarkerClusterGroup({
+                                showCoverageOnHover: false,
+                                maxClusterRadius: 50,
+                                spiderfyDistanceMultiplier: 2
+                            });
+
+shelter_cluster.addLayer(shelter_layer);
+power_cluster.addLayer(power_layer);
+water_cluster.addLayer(water_layer);
+
 basemap_gsi.addTo(map);
 hazard_layer.addTo(map);
-shelter_layer.addTo(map);
-power_layer.addTo(map);
-water_layer.addTo(map);
+shelter_cluster.addTo(map);
+power_cluster.addTo(map);
+water_cluster.addTo(map);
 position_layer.addTo(map);
 
 const overlayMaps = {
-    '避難所': shelter_layer,
-    '電力': power_layer,
-    '給水': water_layer,
+    '避難所': shelter_cluster,
+    '電力': power_cluster,
+    '給水': water_cluster,
     '危険区域': hazard_layer
 };
 
