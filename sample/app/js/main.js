@@ -13,12 +13,14 @@ const basemap_gsi = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessph
 
 L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
 
-const svg = 'css/svg/vending.svg'
-const iconUrl = 'data:image/svg+xml;base64,' + btoa(svg);
+const svg = 'vending.svg'
+const iconURL = 'data:css/image/svg+xml;base64,' + btoa(svg);
+
+const venderIcon = L.icon({iconUrl:iconURL})
 
 const shelter_Marker = L.AwesomeMarkers.icon({icon:'home', markerColor:'darkgreen'});
-const power_Marker = L.icon({icon:iconUrl});
-const water_Marker = L.icon({icon:iconUrl});
+//const power_Marker = L.icon({icon:iconUrl});
+//const water_Marker = L.icon({icon:iconUrl});
 
 const boundary_style = {"fillColor": "transparent", "Color": "blue"};
 
@@ -49,21 +51,21 @@ function onEachFeature_water(feature, layer){
 const shelter_layer = new L.geoJson(json_shelter, {
                             onEachFeature: onEachFeature_shelter,
                             pointToLayer: function(feature, latlng){
-                            return L.marker(latlng, {icon: shelter_Marker});
+                            return L.marker(latlng, {icon: venderIcon});
                             }
                         });
 
 const power_layer = new L.geoJson(json_power, {
                             onEachFeature: onEachFeature_power,
                             pointToLayer: function(feature, latlng){
-                            return L.marker(latlng, {icon: power_Marker});
+                            return L.marker(latlng, {icon: venderIcon});
                             }
                         });
 
 const water_layer = new L.geoJson(json_water, {
                             onEachFeature: onEachFeature_water,
                             pointToLayer: function(feature, latlng){
-                            return L.marker(latlng, {icon: water_Marker});
+                            return L.marker(latlng, {icon: venderIcon});
                             }
                         });
 
